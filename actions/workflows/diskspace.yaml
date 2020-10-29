@@ -5,7 +5,7 @@ input: {}
 vars:
    - stdout: null
    - stdout: null
-   - host: "40.122.212.105"
+   - host: ""
    - cmd: "df -h /var"
 tasks:
    sending_notifications:
@@ -24,9 +24,9 @@ tasks:
    check_dir_size:
       action: core.remote_sudo host=<% ctx(host) %> cmd= <% ctx(cmd) %>
       next:
-         - when: <% succeeded() %>
+         - when: '{{ succeeded() }}'
            publish: stdout= <% result().stdout %>
-         - when: <% failed() %>
+         - when: '{{ failed() }}'
            publish: stderr=<% result().stderr %>
 
 output:
