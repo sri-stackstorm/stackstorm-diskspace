@@ -22,7 +22,12 @@ tasks:
            do:
              - sending_notifications
    check_dir_size:
-      action: core.remote_sudo host=<% ctx(host) %> cmd= <% ctx(cmd) %>
+      action: core.remote_sudo
+      input:
+         hosts: <% ctx(host) %>
+         cmd: <% ctx(cmd) %>
+         username: stockstorm
+         password: admin123
       next:
          - when: '{{ succeeded() }}'
            publish: stdout= <% result().stdout %>
