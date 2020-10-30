@@ -9,12 +9,13 @@ vars:
    - cmd: "df -h /var"
    - slack1: "T01CZJRGW4X/B01DNTP6PHQ"
    - slack2: "VKYMvy8KCHMlVj3Rpqd2pHZV"
+   - slack: https://hooks.slack.com/services/<% ctx().slack1 %>/<% ctx().slack2 %>
 tasks:
    sending_notifications:
       action: slack.post_message
       input:
          message: "Recevied var filesystem alert kicking of self healing"
-         webhook_url: https://hooks.slack.com/services/ <% ctx().slack1 %>/<% ctx().slack2 %>
+         webhook_url: <% ctx(slack) %>
          username: "slackautomation"
       next:
          - when: '{{ succeeded() }}'
