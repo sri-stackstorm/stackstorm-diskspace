@@ -3,7 +3,9 @@ version: 1.0
 description: workflow for cleaning up /var
 input: {}
 vars:
-   - host: ""
+   - stdout: null
+   - stderr: null
+   - host: "40.122.212.105"
    - cmd: "df -h /var"
 tasks:
    sending_notifications:
