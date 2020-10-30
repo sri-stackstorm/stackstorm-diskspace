@@ -3,17 +3,15 @@ version: 1.0
 description: workflow for cleaning up /var
 input: {}
 vars:
-   - stdout: null
-   - stdout: null
    - host: ""
    - cmd: "df -h /var"
 tasks:
    sending_notifications:
       action: slack.post_message
       input:
-         - message: "Recevied var filesystem alert kicking of self healing"
-         - webhook_url: "https://hooks.slack.com/services/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"
-         - username: "slackautomation"
+         message: "Recevied var filesystem alert kicking of self healing"
+         webhook_url: "https://hooks.slack.com/services/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"
+         username: "slackautomation"
       next:
          - when: '{{ succeeded() }}'
            do:
