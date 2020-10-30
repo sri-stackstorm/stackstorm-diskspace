@@ -12,7 +12,7 @@ tasks:
       action: slack.post_message
       input:
          message: "Recevied var filesystem alert kicking of self healing"
-         webhook_url: "https://hooks.slack.com/services/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"
+         webhook_url: "https://hooks.slack.com/services/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"
          username: "slackautomation"
       next:
          - when: '{{ succeeded() }}'
