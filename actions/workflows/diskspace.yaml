@@ -12,15 +12,12 @@ tasks:
       action: slack.post_message
       input:
          - message: "Recevied var filesystem alert kicking of self healing"
-         - webhook_url: "https://hooks.slack.com/services/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"
+         - webhook_url: "https://hooks.slack.com/services/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"
          - username: "slackautomation"
       next:
          - when: '{{ succeeded() }}'
            do:
              - check_dir_size
-         - when: '{{ failed() }}'
-           do:
-             - sending_notifications
    check_dir_size:
       action: core.remote_sudo
       input:
