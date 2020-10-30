@@ -6,4 +6,4 @@ enabled: true
 runner_type: orquesta
 entry_point: workflows/diskspace.yaml
 # pack: diskspace
-parameters: {} 
+# parameters: {} 
