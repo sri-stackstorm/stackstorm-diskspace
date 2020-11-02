@@ -11,6 +11,14 @@ vars:
    - slack2: "VKYMvy8KCHMlVj3Rpqd2pHZV"
    - slack: https://hooks.slack.com/services/<% ctx().slack1 %>/<% ctx().slack2 %>
 tasks:
+   echo_slack:
+      action: core.local
+      input:
+         cmd: "echo <% ctx(slack) %>"
+      next:
+         - publish:
+            - outputtask1: <% result() %>
+
    sending_notifications:
       action: slack.post_message
       input:
@@ -28,12 +36,30 @@ tasks:
          cmd: <% ctx(cmd) %>
          username: stockstorm
          password: admin123
+         sudo_password: admin123
       next:
          - when: '{{ succeeded() }}'
            publish: stdout= <% result().stdout %>
+           do:
+             - sending_success_notification
          - when: '{{ failed() }}'
-           publish: stderr=<% result().stderr %>
+           publish: stderr= <% result().stderr %>
+           do:
+             - sending_failed_notification
+   sending_success_notification:
+      action: slack.post_message
+      input:
+         message: "cleared var filesystem successfully and self healing is completed"
+         webhook_url: <% ctx(slack) %>
+         username: "slackautomation"
+   sending_failed_notification:
+      action: slack.post_message
+      input:
+         message: "clearing var filesystem failed triggering escalation ticket"
+         webhook_url: <% ctx(slack) %>
+         username: "slackautomation"
 
 output:
    - stdout: <% ctx(stdout) %>
    - stderr: <% ctx(stderr) %>
+   - task1output: <% ctx(outputtask1) %>
